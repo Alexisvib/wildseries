@@ -1,0 +1,32 @@
+$color-principle: #141414;
+$color-secondary: #e50913;
+$color-text-primary: #ffffff;
+$color-text-secondary: #7a7a7a;
+
+$light:  $color-principle;
+$navbar-light-color: $color-text-primary;
+$primary: $color-secondary;
+
+* {
+    font-family: 'Rubik', sans-serif;
+    color: $color-text-primary;
+}
+
+@import "~bootstrap/scss/bootstrap";
+
+
+body {
+    background-color: $color-principle;
+}
+
+.logo-navbar {
+    height: 100px;
+}
+
+.nav-link {
+    font-size: 2.6em;
+    margin-right: 1.6em;
+}
+
+
+
