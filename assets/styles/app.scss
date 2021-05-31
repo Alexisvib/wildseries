@@ -9,6 +9,10 @@ $primary: $color-secondary;
 
 * {
     font-family: 'Rubik', sans-serif;
+
+}
+
+h1,h2,h3,h4,h5,p, label {
     color: $color-text-primary;
 }
 
@@ -26,6 +30,15 @@ body {
 .nav-link {
     font-size: 2.6em;
     margin-right: 1.6em;
+}
+
+.form-control{
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.form-text{
+    color:black;
 }
 
 
