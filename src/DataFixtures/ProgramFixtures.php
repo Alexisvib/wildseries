@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -9,10 +10,18 @@ use App\Entity\Program;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
+    private $slugify;
+
+    public function __construct(Slugify $slugify)
+    {
+        $this->slugify = $slugify;
+    }
+
     public function load(ObjectManager $manager)
     {
         $program = new Program();
         $program->setTitle('Walking dead');
+        $program->setSlug($this->slugify->generate($program->getTitle()));
         $program->setPoster('https://fr.web.img3.acsta.net/pictures/21/04/19/14/51/5593951.jpg');
         $program->setSummary('Des zombies envahissent la terre');
         $program->setCategory($this->getReference('category_0'));
@@ -25,6 +34,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         $program = new Program();
         $program->setTitle('Fear The Walking Dead');
+        $program->setSlug($this->slugify->generate($program->getTitle()));
         $program->setPoster('https://fr.web.img6.acsta.net/pictures/20/09/25/11/43/3207723.jpg');
         $program->setSummary('Des zombies envahissent la terre');
         $program->setCategory($this->getReference('category_0'));
@@ -36,6 +46,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         $program = new Program();
         $program->setTitle('Brooklyn Nine-Nine');
+        $program->setSlug($this->slugify->generate($program->getTitle()));
         $program->setPoster('https://fr.web.img6.acsta.net/pictures/20/01/10/10/23/0734068.jpg');
         $program->setSummary("Comedy series following the exploits of Det. Jake Peralta and his diverse,
          lovable colleagues as they police the NYPDs 99th Precinct");
@@ -47,6 +58,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         $program = new Program();
         $program->setTitle('The Mandalorian');
+        $program->setSlug($this->slugify->generate($program->getTitle()));
         $program->setPoster('https://fr.web.img5.acsta.net/pictures/20/09/16/09/09/4156636.jpg');
         $program->setSummary("The travels of a lone bounty hunter in the outer reaches of the galaxy, 
         far from the authority of the New Republic.");
@@ -57,6 +69,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
 
         $program = new Program();
         $program->setTitle('The Witcher');
+        $program->setSlug($this->slugify->generate($program->getTitle()));
         $program->setPoster('https://sm.ign.com/ign_fr/screenshot/default/d-zs52owsauofg7_jtbw.jpg');
         $program->setSummary("Geralt of Rivia, a solitary monster hunter, struggles to find his
          place in a world where people often prove more wicked than beasts.");
