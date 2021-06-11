@@ -42,3 +42,12 @@ Beaucoup de modifications sur les routes
 [video1](https://streamable.com/t71p0l)
 
 [video2](https://streamable.com/b56nln)
+
+
+## Quest 21
+Update on Bootstrap
+fix some issue
+
+[video1](https://streamable.com/74ng9c)
+
+

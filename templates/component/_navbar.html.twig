@@ -1,23 +1,26 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-primary">
+<nav class="navbar navbar-expand-lg navbar-light bg-light  border-bottom border-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{path('app_index')}}"><img class="logo-navbar" src="{{ asset('build/wildseries-logo.png') }}" alt="logo"/></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-            <div class="navbar-nav w-100 d-flex justify-content-end">
-                <a class="nav-link" href="{{path('program_index')}}">Series</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto w-100 d-flex justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{path('program_index')}}">Series</a>
+                </li>
                 <a class="nav-link" href="{{path('category_index')}}">Catégories</a>
                 {% if app.user %}
                     <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-                    <p class="nav-link">{{ app.user.email }}</p>
+                    <a class="nav-link" href="{{ path('user_profil') }}">Mon Compte</a>
                 {% else %}
                     <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
                 {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
                     <a class="nav-link" href="{{ path('admin') }}">Admin</a>
                 {% endif %}
-            </div>
+            </ul>
         </div>
     </div>
 </nav>

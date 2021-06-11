@@ -6,4 +6,19 @@
 
 <h1>Bienvenue !</h1>
 
+    <h2> Découvrez nos dernières séries ajoutées !!</h2>
+
+    <div class="container">
+    <!-- Slider main container -->
+    <div class="swiper-container mySwiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper ">
+            {% for program in programs %}
+            <div class="swiper-slide"><a href="{{ path('program_show', {slug: program.slug}) }}"><img src="{{ program.poster }}" alt="image de série"></a></div>
+            {% endfor %}
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    </div>
 {% endblock %}
