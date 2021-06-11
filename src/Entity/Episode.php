@@ -35,20 +35,23 @@ class Episode
     private $synopsis;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Season::class, inversedBy="episodes")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $season;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
 
+
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="episode")
+     * @ORM\ManyToOne(targetEntity=Season::class, inversedBy="episodes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $season;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="episode", orphanRemoval=true)
      */
     private $comments;
+
+
 
     public function __construct()
     {
@@ -96,18 +99,6 @@ class Episode
         return $this;
     }
 
-    public function getSeason(): ?Season
-    {
-        return $this->season;
-    }
-
-    public function setSeason(?Season $season): self
-    {
-        $this->season = $season;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -116,6 +107,18 @@ class Episode
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getSeason(): ?Season
+    {
+        return $this->season;
+    }
+
+    public function setSeason(?Season $season): self
+    {
+        $this->season = $season;
 
         return $this;
     }

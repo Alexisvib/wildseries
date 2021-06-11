@@ -16,9 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/episode")
+ * @IsGranted("ROLE_ADMIN")
  */
 class EpisodeController extends AbstractController
 {
@@ -68,6 +70,21 @@ class EpisodeController extends AbstractController
     }
 
     /**
+     * @Route("/{slug}/delete", name="episode_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Episode $episode): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($episode);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('episode_index');
+    }
+
+
+
+    /**
      * @Route("/{slug}", name="episode_show", methods={"GET", "POST"})
      */
     public function show(Request $request, Episode $episode, EntityManagerInterface $manager): Response
@@ -75,7 +92,6 @@ class EpisodeController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()) {
             $comment->setEpisode($episode);
             $comment->setAuthor($this->getUser());
@@ -88,6 +104,8 @@ class EpisodeController extends AbstractController
             'form'      => $form->createView(),
         ]);
     }
+
+
 
     /**
      * @Route("/{slug}/edit", name="episode_edit", methods={"GET","POST"})
@@ -110,17 +128,7 @@ class EpisodeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{slug}", name="episode_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Episode $episode): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($episode);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('episode_index');
-    }
+
+
 }

@@ -10,10 +10,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ episode.id }}</td>
-            </tr>
-            <tr>
                 <th>Title</th>
                 <td>{{ episode.title }}</td>
             </tr>
@@ -28,14 +24,27 @@
         </tbody>
     </table>
 
+
+
+    <br>
+
+    <a href="{{ path('episode_edit', {'slug': episode.slug}) }}" class="btn btn-primary">edit episode</a>
+    <br>    <br>
+    {{ include('episode/_delete_form.html.twig') }}
+    <br>    <br>     <br>    <br>
     <h3> Commentaire de nos utilisateurs </h3>
     {% for comment in episode.comments | sort((a, b) => a.createdAt > b.createdAt) %}
-        <h4>{{ comment.author.email}} :  {{ comment.rate }}/5 </h4>
-    <h5>Commentaire publié le {{ comment.createdAt|date("d/m/Y H:i:s") }}</h5>
-    <p>{{ comment.comment }}</p>
+        <div class="row">
+            <div class="col-4">
+                <h4>{{ comment.author.email}} :  {{ comment.rate }}/5 </h4>
+                <h5>Commentaire publié le {{ comment.createdAt|date("d/m/Y H:i:s") }}</h5>
+                <p>{{ comment.comment }}</p>
+            </div>
+            <div class="col-4">
+                {{ include('episode/_delete_Commentform.html.twig') }}
+            </div>
+        </div>
     {% endfor %}
-
-
     {% if app.user %}
     <h1> Laisser un commentaire : </h1>
     <div class="container-fluid">
@@ -53,9 +62,6 @@
     {% endif %}
 
     <a href="{{ path('episode_index') }}">back to list</a>
-    <br>
-    <a href="{{ path('episode_edit', {'slug': episode.slug}) }}">edit</a>
-    <br>
-    {{ include('episode/_delete_form.html.twig') }}
+
     </div>
 {% endblock %}

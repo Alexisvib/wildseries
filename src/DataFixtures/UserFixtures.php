@@ -28,6 +28,7 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($contributor);
+        $this->setReference('user_0', $contributor);
 
         // Création d’un utilisateur de type “administrateur”
         $admin = new User();
@@ -39,6 +40,7 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($admin);
+        $this->setReference('user_1', $contributor);
 
         // Création d’un utilisateur de type “contributeur”
         $contributor = new User();
@@ -50,6 +52,7 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($contributor);
+        $this->setReference('user_2', $contributor);
 
         $manager->flush();
     }

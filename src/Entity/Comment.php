@@ -36,14 +36,16 @@ class Comment
     private $author;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Episode::class, inversedBy="comments")
-     */
-    private $episode;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Episode::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $episode;
+
 
     /**
      * @ORM\PrePersist()
@@ -93,6 +95,18 @@ class Comment
 
         return $this;
     }
+    
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
 
     public function getEpisode(): ?Episode
     {
@@ -102,18 +116,6 @@ class Comment
     public function setEpisode(?Episode $episode): self
     {
         $this->episode = $episode;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

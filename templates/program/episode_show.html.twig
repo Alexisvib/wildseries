@@ -14,9 +14,33 @@
 
         </div>
     </div>
+<h3> Commentaire de nos utilisateurs </h3>
+{% for comment in episode.comments | sort((a, b) => a.createdAt > b.createdAt) %}
+    <div class="row">
+        <div class="col-4">
+            <h4>{{ comment.author.email}} :  {{ comment.rate }}/5 </h4>
+            <h5>Commentaire publié le {{ comment.createdAt|date("d/m/Y H:i:s") }}</h5>
+            <p>{{ comment.comment }}</p>
+        </div>
+        {% if app.user == comment.author or is_granted("ROLE_ADMIN") %}
+        <div class="col-4">
+            {{ include('episode/_delete_Commentform.html.twig') }}
+        </div>
+        {% endif %}
+    </div>
+{% endfor %}
+    {% if app.user %}
+<h1> Laisser un commentaire : </h1>
+<div class="container-fluid">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-4">
+            {{ form_widget(form) }}
+            <input class="btn btn-primary" type="submit" value="envoyer le commentaire">
+        </div>
 
-    <a href="{{ path('program_season_show', {program: program.id, season: season.id}) }}">
-        Retour à la liste des épisodes
-    </a>
-
+    </div>
+    {{ form_end(form) }}
+</div>
+    {% endif %}
 {% endblock %}

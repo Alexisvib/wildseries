@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Page{% endblock %}
+
+{% block body %}
+<h1> PANNEAU ADMINISTRATION </h1>
+    <h2> Accès aux CRUD </h2>
+    <a href="{{ path('season_index') }}"> CRUD SEASON  </a>
+    <br>    <br>    <br>
+<a href="{{ path('episode_index') }}"> CRUD EPISODE  </a>
+
+{% endblock %}

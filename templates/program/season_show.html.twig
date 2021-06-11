@@ -11,7 +11,7 @@
             <h2> Episodes : </h2>
             <ul>
                 {% for episode in season.episodes %}
-                <a href="{{ path('program_episode_show', {program: program.id, season: season.id, episode: episode.id}) }}"><h2> Episode : {{ episode.number }} - {{ episode.title }}</h2></a>
+                <a href="{{ path('program_episode_show', { program: program.id, season: season.id, episode: episode.id }) }}"><h2> Episode : {{ episode.number }} - {{ episode.title }}</h2></a>
                     <br>
                 {% else %}
                     <p> Pas de saison trouvée </p>

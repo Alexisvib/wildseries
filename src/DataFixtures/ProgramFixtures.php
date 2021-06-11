@@ -28,6 +28,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         for ($i=0; $i < 5; $i++) {
             $program->addActor($this->getReference('actor_' . $i));
         }
+        $program->setOwner($this->getReference('user_2'));
         $manager->persist($program);
         $this->addReference('program_0', $program);
 
@@ -40,6 +41,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         $program->setCategory($this->getReference('category_0'));
         $program->addActor($this->getReference('actor_1'));
         $program->addActor($this->getReference('actor_5'));
+        $program->setOwner($this->getReference('user_0'));
         $manager->persist($program);
         $this->addReference('program_1', $program);
 
@@ -52,6 +54,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
          lovable colleagues as they police the NYPDs 99th Precinct");
         $program->setCategory($this->getReference('category_5'));
         $program->addActor($this->getReference('actor_6'));
+        $program->setOwner($this->getReference('user_0'));
         $manager->persist($program);
         $this->addReference('program_2', $program);
 
@@ -64,6 +67,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         far from the authority of the New Republic.");
         $program->setCategory($this->getReference('category_0'));
         $program->addActor($this->getReference('actor_7'));
+        $program->setOwner($this->getReference('user_0'));
         $manager->persist($program);
         $this->addReference('program_3', $program);
 
@@ -75,6 +79,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
          place in a world where people often prove more wicked than beasts.");
         $program->setCategory($this->getReference('category_3'));
         $program->addActor($this->getReference('actor_8'));
+        $program->setOwner($this->getReference('user_0'));
         $manager->persist($program);
         $this->addReference('program_4', $program);
 
@@ -86,6 +91,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         return [
           ActorFixtures::class,
           CategoryFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

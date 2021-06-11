@@ -41,9 +41,10 @@ class Season
     private $program;
 
     /**
-     * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="season")
+     * @ORM\OneToMany(targetEntity=Episode::class, mappedBy="season", orphanRemoval=true)
      */
     private $episodes;
+
 
     public function __construct()
     {

@@ -2,10 +2,14 @@
 
 
 namespace App\Controller;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Form\ProgramType;
 use App\Service\Slugify;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -14,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 /**
  * @Route("/programs", name="program_")
@@ -39,7 +44,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer, EntityManagerInterface $manager): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -47,9 +52,9 @@ class ProgramController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($program);
-            $entityManager->flush();
+            $program->setOwner($this->getUser());
+            $manager->persist($program);
+            $manager->flush();
 
             $email =(new TemplatedEmail())
                 ->from($this->getParameter('mailer_from'))
@@ -70,10 +75,28 @@ class ProgramController extends AbstractController
 
     }
 
+    /**
+     * @Route("/{slug}/edit", name="edit")
+     * @return Response
+     */
+    public function edit(Program $program, Request $request, EntityManagerInterface $manager): Response
+    {
+        if(!($this->getUser() === $program->getOwner()) && !(in_array('ROLE_ADMIN',$this->getUser()->getRoles()))) {
+            throw new AccessDeniedException('Only the owner can edit this program !');
+        }
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->flush();
+            return $this->redirectToRoute('program_index');
+        }
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
+    }
 
     /**
-     * Getting a program by id
-     *
      * @Route("/{slug}", name="show")
      * @return Response
      */
@@ -94,7 +117,8 @@ class ProgramController extends AbstractController
     /**
      * Getting a season by number
      *
-     * @Route("/{program}/{season}", name="season_show")
+     * @Route("/{slug}/{season}", name="season_show")
+     *
      * @return Response
      */
     public function showSeason(Program $program, Season $season): Response
@@ -113,14 +137,27 @@ class ProgramController extends AbstractController
      * @Route("/{program}/{season}/{episode}", name="episode_show")
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Request $request, Program $program, Season $season, Episode $episode, EntityManagerInterface $manager): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $comment->setEpisode($episode);
+            $comment->setAuthor($this->getUser());
+            $manager->persist($comment);
+            $manager->flush();
+        }
         return $this->render('program/episode_show.html.twig', [
+            'form'    => $form->createView(),
             'program' => $program,
             'season'  => $season,
             'episode' => $episode,
         ]);
 
     }
+
+
 
 }
