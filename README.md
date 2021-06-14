@@ -53,3 +53,5 @@ fix some issue
 ## Quest 23
 [video](https://streamable.com/1h0m5r)
 
+## Quest 24
+[video](https://streamable.com/w75zt3)
