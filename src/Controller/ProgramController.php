@@ -86,6 +86,26 @@ class ProgramController extends AbstractController
     }
 
     /**
+     * @Route("/{program}/watchlist", name="watchlist", methods={"GET","POST"})
+     * @return Response
+     */
+    public function addToWatchList(Request $request, Program $program, EntityManagerInterface $manager):Response
+    {
+        if ($this->getUser()->isInWatchList($program)) {
+            $this->getUser()->removeFromWatchlist($program);
+            $this->addFlash('warning', 'Série supprimé des favoris');
+
+        } else {
+            $this->getUser()->addToWatchList($program);
+            $this->addFlash('success', 'Série ajouté en favori');
+        }
+        $manager->flush();
+
+        return $this->redirectToRoute('program_show', ['slug' => $program->getSlug()]);
+
+    }
+
+    /**
      * @Route("/{slug}/edit", name="edit")
      * @return Response
      */
@@ -168,6 +188,8 @@ class ProgramController extends AbstractController
         ]);
 
     }
+
+
 
 
 
