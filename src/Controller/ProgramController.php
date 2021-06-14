@@ -93,15 +93,15 @@ class ProgramController extends AbstractController
     {
         if ($this->getUser()->isInWatchList($program)) {
             $this->getUser()->removeFromWatchlist($program);
-            $this->addFlash('warning', 'Série supprimé des favoris');
 
         } else {
             $this->getUser()->addToWatchList($program);
-            $this->addFlash('success', 'Série ajouté en favori');
         }
         $manager->flush();
 
-        return $this->redirectToRoute('program_show', ['slug' => $program->getSlug()]);
+        return $this->json([
+           'isInWatchList' => $this->getUser()->isInWatchList($program)
+        ]);
 
     }
 
