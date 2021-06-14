@@ -1,8 +1,20 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block title %}All programs{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+    <h1>Rechercher une série</h1>
+    <div class="row">
+        <div class="col-4 ">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </div>
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
         <div>
