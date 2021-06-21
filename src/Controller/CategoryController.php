@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,6 +79,13 @@ class CategoryController extends AbstractController
         return $this->render('category/show.html.twig', [
             'category' => $category,
             'programs' => $programs,
+        ]);
+    }
+
+    public function navbarTop(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('component/_navbar_categories.html.twig', [
+            'categories' => $categoryRepository->findBy([], ['id' => 'DESC']),
         ]);
     }
 

@@ -59,5 +59,13 @@ fix some issue
 ## Quest 25-1
 [video](https://streamable.com/ygqm5t)
 
-## Quest 25-1
+## Quest 25-2
 [video](https://streamable.com/ipajq0)
+
+## Quest 26
+[video](https://streamable.com/t7erf3)
+
+## Quest 27
+[video](https://streamable.com/xqqeia)
+
+
