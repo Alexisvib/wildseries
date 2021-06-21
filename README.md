@@ -63,8 +63,4 @@ fix some issue
 [video](https://streamable.com/ipajq0)
 
 ## Quest 26
-Accès avec menu déroulant non fonctionelle mais avec des liens fonctionnels
-
-la commande $request->setLocale('en') ne fonctionne pas dans le controlleur
-
-[video](https://streamable.com/9ctnfs)
+[video](https://streamable.com/t7erf3)

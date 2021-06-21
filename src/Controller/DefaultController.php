@@ -20,13 +20,16 @@ class DefaultController extends AbstractController
         $form = $this->createForm(LanguageType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $request->setLocale($form->getData()['Choice_Language']);
+            $this->addFlash('success', 'Language Switch !');
+            return $this->redirectToRoute('app_index', ["_locale" => $form->getData()['Choice_Language']]);
         }
         return $this->render('index.html.twig', [
             'programs' => $programs,
             'form' => $form->createView(),
         ]);
     }
+
+
 
 
 
