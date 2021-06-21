@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Actor{% endblock %}
+
+{% block body %}
+    <h1>Edit Actor : {{ actor.name }}</h1>
+
+
+    {% if actor.hasImage %}
+        <img class="align-self-start mr-3" src="{{ asset('uploads/' ~ actor.poster) }}" alt="poster de l'acteur">
+    {% endif %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('actor_list') }}">back to list</a>
+
+{% endblock %}

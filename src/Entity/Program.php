@@ -8,13 +8,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProgramRepository::class)
+ * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  * @UniqueEntity("title", message ="ce titre existe déjà")
+ * @UniqueEntity("poster", message ="ce nom existe déjà")
  */
 class Program
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -43,6 +49,13 @@ class Program
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $poster;
+
+    /**
+     * @Vich\UploadableField(mapping="poster_file", fileNameProperty="poster")
+     * @var File
+     */
+    private $posterFile;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
@@ -75,6 +88,28 @@ class Program
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="watchlist")
      */
     private $viewers;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $updatedAt;
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     public function __construct()
     {
@@ -240,4 +275,36 @@ class Program
 
         return $this;
     }
+
+    public function setPosterFile(File $image = null):Program
+    {
+        $this->posterFile = $image;
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+        return $this;
+    }
+
+    public function getPosterFile(): ?File
+    {
+        return $this->posterFile;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function isUploaded(): bool
+    {
+        return substr($this->poster,0,5) !== 'https';
+    }
+
 }

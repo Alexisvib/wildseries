@@ -14,7 +14,13 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper ">
             {% for program in programs %}
-            <div class="swiper-slide"><a href="{{ path('program_show', {slug: program.slug}) }}"><img src="{{ program.poster }}" alt="image de série"></a></div>
+            <div class="swiper-slide"><a href="{{ path('program_show', {slug: program.slug}) }}">
+                    {% if program.isUploaded %}
+                        <img class="align-self-start mr-3" src="{{ asset('uploads/' ~ program.poster) }}" alt="{{ program.title }} poster">
+                    {% else %}
+                        <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
+                    {% endif %}
+                </a></div>
             {% endfor %}
         </div>
         <!-- If we need pagination -->

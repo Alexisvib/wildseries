@@ -26,6 +26,7 @@ class ActorFixtures extends Fixture
         foreach (self::ACTORS_WALKING as $key => $actorName) {
             $actor = new Actor();
             $actor->setName($actorName);
+            $actor->setHasImage(false);
             $manager->persist($actor);
             $this->addReference('actor_' . $key, $actor);
         }
