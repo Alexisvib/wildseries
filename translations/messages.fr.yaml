@@ -1,0 +1,16 @@
+welcome: Bienvenue
+account:
+      sign_in: Se connecter
+      register: Créer un compte
+      logout: Déconnexion
+      myaccount: Mon compte
+allPrograms: Tous les programmes
+lookforaserie: Recherche une série
+Alltheserie: Toutes les séries du catalogue
+category: catégorie
+showprogram: Voir la fiche
+noseriefound: aucune série trouvé
+addaprogram: Ajout d'un programme
+backtohome: retour à l'accueil
+welcome.title: Bienvenue
+changeLanguage: Changer de Langue

@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-{% block title %}All programs{% endblock %}
+{% block title %}{{ 'allPrograms' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
-    <h1>Rechercher une série</h1>
+    <h1>{{ 'lookforaserie' | trans }}</h1>
     <div class="row">
         <div class="col-4 ">
             {{ form_start(form) }}
@@ -15,25 +15,25 @@
         </div>
     </div>
     </div>
-    <h1>Toutes les séries de la table program : </h1>
+    <h1>{{ 'Alltheserie' | trans }} </h1>
     {% for program in programs %}
         <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+            <h2>{{ loop.index }} / {{ program.title }} - {{ 'category' | trans }} : {{ program.category.name }}</h2>
             <p>{{ program.summary }}</p>
-            <a href="{{ path("program_show", { slug: program.slug }) }}">Voir la fiche</a>
+            <a href="{{ path("program_show", { slug: program.slug }) }}">{{ 'showprogram' | trans }}</a>
         </div>
     {% else %}
-        Aucune série trouvée.
+        {{ 'noseriefound' | trans }}
     {% endfor %}
 
     <br>
-    <h4> Ajout d'un programme </h4>
+    <h4> {{ 'addaprogram' | trans }}</h4>
     <a href="{{ path('program_new') }}">
-        Ajouter un programme
+        {{ 'addaprogram' | trans }}
     </a>
 
     <br><br>
     <a href="{{ path('app_index') }}">
-        Retour à l'accueil
+        {{ 'backtohome' | trans }}
     </a>
 {% endblock %}

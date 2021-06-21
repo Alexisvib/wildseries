@@ -21,6 +21,7 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/programs", name="program_")
@@ -107,6 +108,7 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{slug}/edit", name="edit")
+     * @IsGranted("ROLE_CONTRIBUTOR")
      * @return Response
      */
     public function edit(Program $program, Request $request, EntityManagerInterface $manager): Response

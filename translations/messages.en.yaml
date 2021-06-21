@@ -1,0 +1,16 @@
+welcome: Welcome
+account:
+  sign_in: Sign In
+  register: Create Account
+  logout: Logout
+  myaccount: My account
+allPrograms: All the programs
+lookforaserie: Look for a program
+Alltheserie: All the programs
+category: Category
+showprogram: Show the program
+noseriefound: No program found
+addaprogram: Add a program
+backtohome: Back to home
+welcome.title: Welcome
+changeLanguage: Change Language

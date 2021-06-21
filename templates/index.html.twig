@@ -1,24 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home Page{% endblock %}
-
+{% block title %}{{ 'welcome' | trans }} !{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 
-<h1>Bienvenue !</h1>
+<h1>{{ 'welcome' | trans }}</h1>
 
-    <h2> Découvrez nos dernières séries ajoutées !!</h2>
+    <h2> {{ 'welcome.title' | trans }}</h2>
 
     <div class="container">
-    <!-- Slider main container -->
-    <div class="swiper-container mySwiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper ">
-            {% for program in programs %}
-            <div class="swiper-slide"><a href="{{ path('program_show', {slug: program.slug}) }}"><img src="{{ program.poster }}" alt="image de série"></a></div>
-            {% endfor %}
+        <a href="/en/">English</a>
+        <a href="/fr/">French</a>
+
+        <br> <br> <br>
+        <!-- Slider main container -->
+        <div class="swiper-container mySwiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper ">
+                {% for program in programs %}
+                <div class="swiper-slide"><a href="{{ path('program_show', {slug: program.slug}) }}"><img src="{{ program.poster }}" alt="image de série"></a></div>
+                {% endfor %}
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
         </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
-    </div>
+
     </div>
 {% endblock %}
